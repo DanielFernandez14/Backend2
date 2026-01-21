@@ -1,0 +1,250 @@
+:root {
+    --bg: #f7f8fb;
+    --card: #ffffff;
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: #e5e7eb;
+    --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    --radius: 14px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 18px 70px;
+}
+.container > h2 {
+    margin: 0 0 24px;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-align: center;
+    line-height: 1.2;
+    color: #0f172a;
+}
+
+.container > h2::after {
+    content: "";
+    display: block;
+    width: 48px;
+    height: 3px;
+    margin: 12px auto 0;
+    border-radius: 2px;
+    background-color: #e5e7eb;
+}
+
+.h2Form {
+    margin: 0 0 16px;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-align: center;
+    color: #0f172a;
+}
+
+.h2Form::after {
+    content: "";
+    display: block;
+    width: 36px;
+    height: 3px;
+    margin: 10px auto 0;
+    border-radius: 2px;
+    background-color: #e5e7eb;
+}
+
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 18px;
+    align-items: start;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    display: grid;
+    gap: 10px;
+    box-shadow: 0 1px 0 rgba(15, 23, 42, 0.03);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.card h2 {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.35;
+    font-weight: 700;
+    color: var(--text);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: calc(14px * 1.35 * 2);
+}
+
+.card img {
+    width: 100%;
+    height: 190px;
+    object-fit: contain;
+    background: #fbfbfc;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+/* Sección Form */
+section {
+    margin-top: 28px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+}
+
+section > h2 {
+    margin: 0 0 14px;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+
+form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+form input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #ffffff;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+form input:focus {
+    border-color: #94a3b8;
+    box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.25);
+}
+
+form input[name="description"] {
+    grid-column: 1 / -1;
+}
+
+form button {
+    grid-column: 1 / -1;
+    padding: 11px 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #0f172a;
+    color: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.12s ease, background 0.12s ease;
+}
+
+form button:hover {
+    background: #111c33;
+    transform: translateY(-1px);
+}
+
+form button:active {
+    transform: translateY(0px);
+}
+
+@media (max-width: 520px) {
+    form {
+        grid-template-columns: 1fr;
+    }
+}
+.add-product {
+    margin-top: 36px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.add-product h2 {
+    margin: 0 0 16px;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+
+.add-product form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.add-product input {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.add-product input::placeholder {
+    color: #94a3b8;
+}
+
+.add-product input:focus {
+    border-color: #64748b;
+    box-shadow: 0 0 0 4px rgba(100, 116, 139, 0.18);
+}
+
+.add-product input[name="description"] {
+    grid-column: 1 / -1;
+}
+
+.add-product button {
+    grid-column: 1 / -1;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: none;
+    background: #0f172a;
+    color: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.12s ease;
+}
+
+.add-product button:hover {
+    background: #111c33;
+    transform: translateY(-1px);
+}
+
+.add-product button:active {
+    transform: translateY(0);
+}
+
+@media (max-width: 520px) {
+    .add-product form {
+        grid-template-columns: 1fr;
+    }
+}
+

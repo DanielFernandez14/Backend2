@@ -1,0 +1,7 @@
+{"scripts": {
+  "dev": "ts-node-dev index.ts"
+},
+  "dependencies": {
+    "ts-node-dev": "^2.0.0"
+  }
+}

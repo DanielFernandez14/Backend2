@@ -1,0 +1,17 @@
+{
+    "name": "clase_6.1",
+    "version": "1.0.0",
+    "description": "",
+    "type": "module",
+    "scripts": {
+        "dev": "tsx watch crud.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/node": "^25.0.10",
+        "tsx": "^4.7.0",
+        "typescript": "^5.9.3"
+    }
+}

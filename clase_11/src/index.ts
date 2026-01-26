@@ -22,8 +22,48 @@ const filmSchema = new Schema ({
     gender: {type: String, required: true}
 })
 
-const File = model("film", filmSchema)
+const Film = model("film", filmSchema)
 
+const addNewFilm = async () => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+const getFilms = async () => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+const getFilm = async (id: string) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+
+const updateFilm = async (id: string) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
+
+const deleteFilm = async (id: string) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
 
 
 connectMongoDB()

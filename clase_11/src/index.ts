@@ -45,7 +45,7 @@ const addNewFilm = async (newFilm: IFilm) => {
         return {
             success: true,
             data: newFileToDB,
-            messagge: "Movie added successfully"
+            messagge: "Movie added successfully ✅"
         }
     } catch (error: any) {
         return{
@@ -58,24 +58,40 @@ const addNewFilm = async (newFilm: IFilm) => {
 const getFilms = async () => {
     try {
         const films = await Film.find()
-        return{
+        return {
             success: true,
             data: films,
-            message: "films successfully recovered"
+            message: "films successfully recovered ✅"
         }
     } catch (error: any) {
-        return{
+        return {
             success: false,
             error: error.message
         }
     }
 }
 
+
 const getFilm = async (id: string) => {
     try {
-        
+        const foundFilm = await Film.findById(id)
+        if (!foundFilm) {
+            return {
+                success: false,
+                message: "Film not found ❌"
+            }
+        }
+        return{
+            success: true,
+            data: foundFilm,
+            message: "Film successfully recovered"
+        }
+
     } catch (error: any) {
-        
+        return {
+            success: true,
+            message: " Film not found 2 ❌"
+        }
     }
 }
 
@@ -99,8 +115,14 @@ const deleteFilm = async (id: string) => {
 const main = async () => {
     connectMongoDB()
 
-    const films = await getFilms()
-    console.log(films)
+    const film = await getFilm("69780797001a25681273f646")
+    console.log(film)
+
+
+
+
+    // const films = await getFilms()
+    // console.log(films)
 
 
 

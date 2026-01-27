@@ -36,37 +36,99 @@ interface IUser {
 
 const getAllUser = async () => {
     try {
-        
-    } catch (error: any) {
-        
+        const users = await User.find()
+        return{
+            success: true,
+            data: users,
+            message: "Obtener todos los usuarios"
+        }
+    } catch (error) {
+        const e = error as Error
+        return {
+            success: false,
+            error: e.message
+        }
     }
 }
 const getUserById = async (id: string) => {
     try {
-        
+        const user = await User.findById(id)
+        if (!user) {
+            return {
+                success: false,
+                message: "Usuario no encontrado"
+            }
+        }
     } catch (error) {
-        
+        const e = error as Error
+        return {
+            success: false,
+            error: e.message
+        }
     }
 }
-const createUser = async (newUserSchema: IUser) => {
+const createUser = async (newUserData: IUser) => {
     try {
-        
-    } catch (error: any) {
-        
+        const {username, password, email} = newUserData
+        const newUser = new User({username, password, email})
+
+        await newUser.save()
+
+        return{
+            success: true,
+            data: newUser,
+            message: "Usuario creado con éxito ✅"
+        }
+    } catch (error) {
+        const e = error as Error
+        return {
+            success: false,
+            error: e.message
+        }
     }
 }
 const updateUser = async (id: string, data: Partial<IUser>) => {
     try {
-        
-    } catch (error: any) {
-        
+        const updateUser = await User.findByIdAndUpdate(id, data, { new: true})
+        if(!updateUser) {
+            return {
+                success: false,
+                message: "Usuario no encontrado"
+            }
+        }
+
+        return{
+            success: true,
+            message: "Usuario actualizado con éxito ✅"
+        }
+    } catch (error) {
+        const e = error as Error
+        return {
+            success: false,
+            error: e.message
+        }
     }
 }
 const deleteUser = async (id: string) => {
     try {
-        
-    } catch (error:any) {
-        
+        const deleteUser = await User.findByIdAndDelete(id)
+        if (!deleteUser) {
+            return {
+                success: false,
+                message: "Usuario no encontrado"
+            }
+        }
+            return {
+                success: true,
+                data: deleteUser._id,
+                message: "Usuario eliminado con éxito ✅"
+            }
+    } catch (error) {
+        const e = error as Error
+        return {
+            success: false,
+            error: e.message
+        }
     }
 }
 
@@ -75,7 +137,17 @@ const deleteUser = async (id: string) => {
 const main = async () => {
     connectMongoDb()
 
+    // const user = await deleteUser("69791ef3f0f07a421befb5fd")
+    // console.log(user)
 
+    // const user = await updateUser("69791ef3f0f07a421befb5fd", {email: "daniel123@gmail.com"})
+    // console.log(user)
+
+    // const user = await createUser({username: "daniel1", password: "daniel1", email: "daniel@gmaila"})
+    // console.log(user)
+
+    // const user = await getUserById("asdf")
+    // console.log(user)
 }
 
 main()

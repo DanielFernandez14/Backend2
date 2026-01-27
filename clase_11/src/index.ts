@@ -96,11 +96,25 @@ const getFilm = async (id: string) => {
 }
 
 
-const updateFilm = async (id: string) => {
+const updateFilm = async (id: string, newData: Partial<IFilm>) => {
     try {
-        
+        const updateFilm = await Film.findByIdAndUpdate(id, newData, {new: true})
+        if(!updateFilm) 
+            return {
+                success: false, 
+                message: "Film not Found ❌"
+        } 
+        return {
+            success: true,
+            data: updateFilm,
+            message: "movie successfully updated"
+        }
+
     } catch (error: any) {
-        
+        return{
+            success: false,
+            error: error.message
+        }
     }
 }
 
@@ -115,8 +129,16 @@ const deleteFilm = async (id: string) => {
 const main = async () => {
     connectMongoDB()
 
-    const film = await getFilm("69780797001a25681273f646")
-    console.log(film)
+    const updatedFilm = await updateFilm("69780797001a25681273f646", {rating: 8 })
+    console.log(updatedFilm)
+
+
+
+
+
+
+    // const film = await getFilm("69780797001a25681273f646")
+    // console.log(film)
 
 
 

@@ -120,17 +120,44 @@ const updateFilm = async (id: string, newData: Partial<IFilm>) => {
 
 const deleteFilm = async (id: string) => {
     try {
-        
+        const deletedFilm = await Film.findByIdAndDelete(id)
+        if(!deletedFilm) 
+            return {
+                success: false,
+                message: "Film not found ❌"
+            }
+            return {
+                success: true,
+                data: deletedFilm,
+                message: "Film successfully deleted ✅"
+        }
     } catch (error: any) {
-        
+        return {
+            success: false,
+            message: error.message
+        }
     }
 }
 
 const main = async () => {
     connectMongoDB()
 
-    const updatedFilm = await updateFilm("69780797001a25681273f646", {rating: 8 })
-    console.log(updatedFilm)
+
+
+
+
+
+
+// const deleteMovie = await deleteFilm("6978085d4fd314b02ba1a5de")
+// console.log(deleteMovie)
+
+
+
+
+
+
+    // const updatedFilm = await updateFilm("69780797001a25681273f646", {rating: 8 })
+    // console.log(updatedFilm)
 
 
 
@@ -143,8 +170,10 @@ const main = async () => {
 
 
 
+
     // const films = await getFilms()
     // console.log(films)
+
 
 
 

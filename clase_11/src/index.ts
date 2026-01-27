@@ -5,6 +5,12 @@ process.loadEnvFile()
 
 const URI_DB = process.env.URI_DB || ""
 
+interface IFilm{
+    title: string,
+    year: number,
+    rating: number,
+    gender: string
+}
 
 const connectMongoDB = async () =>  {
     try {
@@ -19,16 +25,33 @@ const filmSchema = new Schema ({
     title: {type: String, required: true, unique: true},
     year: {type: Number, required: true},
     rating: {type: Number, required: true},
-    gender: {type: String, required: true}
-})
+    gender: {type: String, required: true}  
+    }, {
+        versionKey: false
+    }
+)
 
 const Film = model("film", filmSchema)
 
-const addNewFilm = async () => {
+const addNewFilm = async (newFilm: IFilm) => {
     try {
-        
-    } catch (error) {
-        
+        const {title, year, rating, gender } = newFilm
+        if(!title || !year || !rating || !gender) {
+            return {success: false, error: "Invalid data"}
+        }
+
+        const newFileToDB = new Film ({ title, year, rating, gender})
+        await newFileToDB.save()
+        return {
+            success: true,
+            data: newFileToDB,
+            messagge: "Movie added successfully"
+        }
+    } catch (error: any) {
+        return{
+            success: true,
+            error: error.message
+        }
     }
 }
 
@@ -65,6 +88,11 @@ const deleteFilm = async (id: string) => {
     }
 }
 
+const main = async () => {
+    connectMongoDB()
 
-connectMongoDB()
+    const savedFilm = await addNewFilm({title: "El Man", year: 2012, rating: 7, gender: "acción"})
+    console.log(savedFilm)
+}
 
+main()

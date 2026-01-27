@@ -57,16 +57,24 @@ const addNewFilm = async (newFilm: IFilm) => {
 
 const getFilms = async () => {
     try {
-        
-    } catch (error) {
-        
+        const films = await Film.find()
+        return{
+            success: true,
+            data: films,
+            message: "films successfully recovered"
+        }
+    } catch (error: any) {
+        return{
+            success: false,
+            error: error.message
+        }
     }
 }
 
 const getFilm = async (id: string) => {
     try {
         
-    } catch (error) {
+    } catch (error: any) {
         
     }
 }
@@ -75,7 +83,7 @@ const getFilm = async (id: string) => {
 const updateFilm = async (id: string) => {
     try {
         
-    } catch (error) {
+    } catch (error: any) {
         
     }
 }
@@ -83,7 +91,7 @@ const updateFilm = async (id: string) => {
 const deleteFilm = async (id: string) => {
     try {
         
-    } catch (error) {
+    } catch (error: any) {
         
     }
 }
@@ -91,8 +99,13 @@ const deleteFilm = async (id: string) => {
 const main = async () => {
     connectMongoDB()
 
-    const savedFilm = await addNewFilm({title: "El Man", year: 2012, rating: 7, gender: "acción"})
-    console.log(savedFilm)
+    const films = await getFilms()
+    console.log(films)
+
+
+
+    // const savedFilm = await addNewFilm({title: "El Man", year: 2012, rating: 7, gender: "acción"})
+    // console.log(savedFilm)
 }
 
 main()

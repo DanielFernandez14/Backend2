@@ -1,0 +1,30 @@
+// El index lo dejamos para el servidor http
+// Será el input del sistema
+// designa peticion al router correcto
+
+
+import express from "express"
+
+import { connectMongoDB } from "./config/mongo"
+import cors from "cors"
+import { bookRouter } from "./routes/bookRouter"
+
+
+process.loadEnvFile()
+
+const PORT = process.env.PORT
+
+
+
+const app = express()
+app.use(express.json())
+app.use("/api/books", bookRouter)
+
+app.use(cors())
+
+
+
+app.listen(PORT, () => {
+    connectMongoDB()
+    console.log(`✅ Servidor en escucha en el puerto http://localhost: ${PORT}`)
+})

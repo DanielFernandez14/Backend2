@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clase_17 - Productos</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <button class="btn btn--ghost" id="btnDownload" type="button">Descargar JSON</button>
+
+    <div class="app-shell">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar__header">
+                <div class="brand">
+                    <div class="brand__logo"></div>
+                    <div class="brand__title">
+                        <strong>MiniStore Dashboard</strong>
+                        <span>Limpieza & Almacén</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar__nav">
+                <div class="nav-card">
+                    <div class="nav-card__label">Total de productos</div>
+                    <div class="nav-card__value" id="count-total">0</div>
+
+                    <div class="nav-badges">
+                        <span class="badge badge--limpieza">
+                            Limpieza: <strong id="count-limpieza">0</strong>
+                        </span>
+                        <span class="badge badge--almacen">
+                            Almacén: <strong id="count-almacen">0</strong>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="nav-card">
+                    <div class="nav-card__label">Estado</div>
+                    <div class="nav-card__value" style="font-size: 14px; font-weight: 600; margin-top: 10px;">
+                        CRUD activo
+                    </div>
+                    <div style="margin-top: 8px; color: var(--muted); font-size: 12px;">
+                        Backend: <span style="color: rgba(46,231,255,0.95);">localhost:1234</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar__footer">
+                Tip: usá categorías <strong>limpieza</strong> y <strong>almacen</strong>.
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="main">
+            <header class="header">
+                <div class="header__title">
+                    <h1>Gestión de productos</h1>
+                    <p>Agregá, editá y eliminá productos. Se guardan automáticamente en su “carpeta” según categoría.</p>
+                </div>
+
+                <div class="header__actions">
+                    <button class="btn btn--ghost" id="btnRefresh" type="button">Recargar</button>
+                </div>
+            </header>
+
+            <!-- Form card -->
+            <section class="card">
+                <div class="card__header">
+                    <h2>Formulario</h2>
+                    <p class="messages" aria-live="polite"></p>
+                </div>
+
+                <div class="card__content">
+                    <form id="productForm" autocomplete="off">
+                        <input type="hidden" id="productId" value="" />
+
+                        <div class="form-grid">
+                            <div class="field">
+                                <label for="name">Nombre</label>
+                                <input type="text" name="name" id="name" required minlength="2" maxlength="60" />
+                            </div>
+
+                            <div class="field">
+                                <label for="price">Precio</label>
+                                <input type="number" name="price" id="price" required min="0" step="0.01" />
+                            </div>
+
+                            <div class="field">
+                                <label for="category">Categoría</label>
+                                <select name="category" id="category" required>
+                                    <option value="">Seleccionar...</option>
+                                    <option value="limpieza">limpieza</option>
+                                    <option value="almacen">almacen</option>
+                                </select>
+                            </div>
+
+                            <button class="btn btn--primary" type="submit" id="btnSubmit">Agregar Producto</button>
+                            <button class="btn" type="button" id="btnCancel" style="display:none;">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Two "folders" -->
+            <section class="two-cols">
+                <!-- Limpieza -->
+                <section class="card">
+                    <div class="card__header">
+                        <div class="section-title">
+                            <h2>Carpeta: Limpieza</h2>
+                        </div>
+                        <div class="section-title__meta">
+                            <span class="pill pill--limpieza">limpieza</span>
+                            <span>Total: <strong id="limpieza-total">0</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="card__content">
+                        <ul class="product-list" id="products-limpieza"></ul>
+                    </div>
+                </section>
+
+                <!-- Almacen -->
+                <section class="card">
+                    <div class="card__header">
+                        <div class="section-title">
+                            <h2>Carpeta: Almacén</h2>
+                        </div>
+                        <div class="section-title__meta">
+                            <span class="pill pill--almacen">almacen</span>
+                            <span>Total: <strong id="almacen-total">0</strong></span>
+                        </div>
+                    </div>
+
+                    <div class="card__content">
+                        <ul class="product-list" id="products-almacen"></ul>
+                    </div>
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -30,7 +30,7 @@ const register = async (req: Request, res: Response): Promise<any>  => {
         res.status(201).json({
             success: true,
             message: "Usuario creado con éxito",
-            data: newUser
+            data: {_id: newUser._id, username: newDataUser.username, email: newDataUser.email}
         })
 
 
@@ -49,7 +49,35 @@ const register = async (req: Request, res: Response): Promise<any>  => {
 
 const login = async (req: Request, res: Response): Promise<any>  => {
     try {
-        
+        const body = req.body
+        const {email, password}: Partial<User> = body
+
+        if(!email || password){
+            return res.status(400).json({
+                success: false,
+                message: "📛 Data Invalida"
+            })
+        } 
+
+        const user = await Auth.findOne({ email })
+        if(!user) return res.status(401).json({
+            success: false,
+            message: "📛 unauthorized"
+        })  
+
+        const validatePassword = await bcryptjs.compare(password!, user.password)
+
+        if(!validatePassword) {
+            return res.status(401).json({
+            success: false,
+            message: "📛 unauthorized"
+        })  
+        }
+        res.json({
+            success: true,
+            message: "✅ Usuario logueado"
+        })
+
     } catch (error) {
         const err = error as Error
         res.status(500).json({

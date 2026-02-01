@@ -9,4 +9,6 @@ productRouter.post("/", addNewProduct)
 productRouter.delete("/:id", deleteProduct)
 productRouter.patch("/:id", updateProduct)
 
+
+
 export { productRouter }

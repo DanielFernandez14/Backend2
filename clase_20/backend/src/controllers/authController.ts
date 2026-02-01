@@ -1,0 +1,120 @@
+import { Request, Response } from "express"
+import bcryptjs from "bcryptjs"
+import { Auth } from "../models/authModel"
+
+interface User {
+    username: string,
+    email: string,
+    password: string
+}
+
+const register = async (req: Request, res: Response): Promise<any>  => {
+    try {
+        console.log("✅ PEGÓ REGISTER", req.body)
+
+        const body = req.body
+        const { username, email, password }: User = body
+
+        // ✅ Validación mínima para poder notificar bien (400)
+        if (!username || !email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: "📛 Faltan datos: username, email y password son obligatorios"
+            })
+        }
+
+        // hashear la constraseña
+        const hash = await bcryptjs.hash(password, 10)
+
+        const newDataUser = {
+            username,
+            email,
+            password: hash
+        }
+
+        const newUser = new Auth(newDataUser)
+        await newUser.save()
+
+        res.status(201).json({
+            success: true,
+            message: "Usuario creado con éxito",
+            data: { _id: newUser._id, username: newDataUser.username, email: newDataUser.email }
+        })
+
+    } catch (error: any) {
+        // ✅ DUPLICADO (Mongo) => code 11000
+        // Ej: E11000 duplicate key error collection ... email: "..."
+        if (error?.code === 11000) {
+            const duplicatedField =
+                Object.keys(error?.keyPattern || error?.keyValue || {})[0] || "dato"
+
+            const friendlyMessage =
+                duplicatedField === "email"
+                    ? "📛 Ese email ya está registrado"
+                    : duplicatedField === "username"
+                        ? "📛 Ese username ya está en uso"
+                        : "📛 Ya existe un usuario con esos datos"
+
+            return res.status(409).json({
+                success: false,
+                message: friendlyMessage
+            })
+        }
+
+        // ✅ Errores de validación Mongoose
+        if (error?.name === "ValidationError") {
+            return res.status(400).json({
+                success: false,
+                message: "📛 Datos inválidos. Revisá los campos ingresados"
+            })
+        }
+
+        const err = error as Error
+        res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+}
+
+const login = async (req: Request, res: Response): Promise<any>  => {
+    try {
+        const body = req.body
+        const {email, password}: Partial<User> = body
+
+        if(!email || !password){
+            return res.status(400).json({
+                success: false,
+                message: "📛 Data Invalida"
+            })
+        } 
+
+        const user = await Auth.findOne({ email })
+        if(!user) return res.status(401).json({
+            success: false,
+            message: "📛 unauthorized"
+        })  
+
+        const validatePassword = await bcryptjs.compare(password!, user.password)
+
+        if(!validatePassword) {
+            return res.status(401).json({
+            success: false,
+            message: "📛 unauthorized"
+        })  
+        }
+        res.json({
+            success: true,
+            message: "✅ Usuario logueado"
+        })
+
+    } catch (error) {
+        const err = error as Error
+        res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+}
+
+export { register, login }

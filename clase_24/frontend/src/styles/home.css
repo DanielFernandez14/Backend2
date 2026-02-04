@@ -1,0 +1,30 @@
+section {
+    margin-top: 2rem;
+}
+
+section > div {
+    background-color: #fff;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+section p {
+    margin: 0.3rem 0;
+}
+
+section button {
+    margin-top: 0.6rem;
+    margin-right: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #c65d2e;
+    color: white;
+    cursor: pointer;
+}
+
+section button:hover {
+    background-color: #a94c25;
+}

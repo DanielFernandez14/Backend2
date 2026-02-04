@@ -1,0 +1,14 @@
+h1 {
+    text-align: center;
+    margin-top: 1rem;
+    color: #5a3e36;
+}
+
+button[type="button"] {
+    background-color: #d2b48c;
+    color: #3b2f2f;
+}
+
+button[type="button"]:hover {
+    background-color: #c1a172;
+}
